@@ -3,10 +3,13 @@
 from py_utils import *
 
 
+# FileStat class
 class FileStat:
+    # CTOR
     def __init__(self, p_directory):
         self.m_directory = p_directory
 
+    # get directory size (recursive)
     def get_directory_size_r(self, p_directory):
         l_file_size = 0
 
@@ -20,11 +23,13 @@ class FileStat:
 
         return l_file_size
 
+    # get directory size
     def get_directory_size(self):
         assert isinstance(self.m_directory, str)
 
         return self.get_directory_size_r(self.m_directory)
 
+    # get file extensions dictionary
     def get_file_extensions(self):
         assert isinstance(self.m_directory, str)
 
@@ -40,6 +45,6 @@ class FileStat:
                     if l_file_extensions.has_key(l_file_ext):
                         l_file_extensions[l_file_ext] += 1
                     else:
-                        l_file_extensions[l_file_ext] = 0
+                        l_file_extensions[l_file_ext] = 1
 
         return l_file_extensions
