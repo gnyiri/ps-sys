@@ -4,13 +4,31 @@ from py_utils import *
 
 
 class FileStat:
-    def __init__(self, directory):
-        self.m_directory = directory
-        self.m_file_count = 0
-        self.m_file_extensions = {}
+    def __init__(self, p_directory):
+        self.m_directory = p_directory
 
-    def lookup(self):
+    def get_directory_size_r(self, p_directory):
+        l_file_size = 0
+
+        for l_root, l_dir, l_files in os.walk(p_directory):
+            for l_file in l_files:
+                l_full_path = l_root + '/' + l_file
+                if os.path.isfile(l_full_path):
+                    l_file_size += os.path.getsize(l_full_path)
+                else:
+                    l_file_size += self.get_directory_size_r(l_full_path)
+
+        return l_file_size
+
+    def get_directory_size(self):
         assert isinstance(self.m_directory, str)
+
+        return self.get_directory_size_r(self.m_directory)
+
+    def get_file_extensions(self):
+        assert isinstance(self.m_directory, str)
+
+        l_file_extensions = {}
 
         if len(self.m_directory) < 1:
             print 'Wrong directory name! Exit!'
@@ -18,16 +36,10 @@ class FileStat:
             print 'Starting lookup ' + self.m_directory
             for l_root, l_dir, l_files in os.walk(self.m_directory):
                 for l_file in l_files:
-                    print l_file
-                    self.m_file_count += 1
-
-                    file_ext = get_file_extension(l_file)
-                    if self.m_file_extensions.has_key(file_ext):
-                        self.m_file_extensions[file_ext] += 1
+                    l_file_ext = get_file_extension(l_file)
+                    if l_file_extensions.has_key(l_file_ext):
+                        l_file_extensions[l_file_ext] += 1
                     else:
-                        self.m_file_extensions[file_ext] = 0
+                        l_file_extensions[l_file_ext] = 0
 
-            print self.m_file_count
-
-            for key in self.m_file_extensions:
-                print key, ' => ', self.m_file_extensions[key]
+        return l_file_extensions
