@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import sys
-from ps_utils.file_stat import FileStat
+from ps_utils.py_file_stat import FileStat
 
 
 def main():
