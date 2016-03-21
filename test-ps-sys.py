@@ -15,12 +15,12 @@ class TestUtils(unittest.TestCase):
 
 class TestFileStat(unittest.TestCase):
     def test_get_file_extensions(self):
-        l_f = FileStat('/tmp/')
+        l_f = DirStat('/tmp/')
         l_file_extensions = l_f.get_file_extensions()
         self.assertLess(0, len(l_file_extensions.items()))
 
     def test_get_directory_size(self):
-        l_f = FileStat('/tmp/')
+        l_f = DirStat('/tmp/')
         self.assertLess(0, l_f.get_directory_size())
 
 if __name__ == '__main__':

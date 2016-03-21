@@ -4,7 +4,7 @@ from py_utils import *
 
 
 # FileStat class
-class FileStat:
+class DirStat:
     # CTOR
     def __init__(self, p_directory):
         self.m_directory = p_directory
