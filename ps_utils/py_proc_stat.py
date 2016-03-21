@@ -19,10 +19,25 @@ def get_process_ids():
     return l_process_ids
 
 
-def get_process_details(p_process_id):
+def get_process_status(p_process_id):
     l_process_path = '/proc/'
-    l_process_details = ''
-    l_file = open(l_process_path + str(p_process_id) + '/status', "r")
-    l_process_details = l_file.read()
+    l_process_status = ""
+
+    try:
+        l_file = open(l_process_path + str(p_process_id) + '/status', "r")
+    except IOError as l_e:
+        return ""
+
+    l_process_status = l_file.read()
     l_file.close()
-    return l_process_details
+
+    return l_process_status
+
+
+def parse_process_status(p_process_status, p_section):
+    assert isinstance(p_process_status, str)
+    assert isinstance(p_section, str)
+
+    p_value = p_process_status.split(':')
+
+    print p_value

@@ -36,7 +36,10 @@ class Form(QDialog):
     def update_process_details(self, p_item):
         l_item = p_item.text()
         self.m_browser_details.clear()
-        self.m_browser_details.append(get_process_details(l_item))
+        l_process_status = get_process_status(l_item)
+        self.m_browser_details.append(l_process_status)
+
+        parse_process_status(l_process_status, "VmStat")
 
 
 def main():

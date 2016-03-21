@@ -15,7 +15,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(get_file_extension(''), '')
 
 
-class TestFileStat(unittest.TestCase):
+class TestDirStat(unittest.TestCase):
     def test_get_file_extensions(self):
         l_dir_stat = DirStat('/tmp/')
         l_file_extensions = l_dir_stat.get_file_extensions()
@@ -25,6 +25,8 @@ class TestFileStat(unittest.TestCase):
         l_dir_stat = DirStat('/tmp/')
         self.assertLess(0, l_dir_stat.get_directory_size())
 
+
+class TestProcStat(unittest.TestCase):
     def test_get_process_ids(self):
         l_process_ids = get_process_ids()
         self.assertLess(0, len(l_process_ids))
@@ -32,6 +34,16 @@ class TestFileStat(unittest.TestCase):
         for l_process_id in l_process_ids:
             if not re.search('\d+', l_process_id):
                 self.fail("Wrong process id")
+
+    def test_get_process_status(self):
+        l_process_status = get_process_status("0")
+        self.assertEqual(l_process_status, "")
+
+        l_process_ids = get_process_ids()
+        self.assertLess(0, len(l_process_ids))
+
+        for l_process_id in l_process_ids:
+            self.assertLess(0, len(get_process_status(l_process_id)))
 
 
 if __name__ == '__main__':
