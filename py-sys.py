@@ -8,29 +8,35 @@ from PyQt4.QtGui import *
 
 
 class Form(QDialog):
-    def __init__(self, parent = None):
-        super(Form, self).__init__(parent)
-        self.m_process_query_button = QPushButton("Get process id-s")
-        self.m_process_ids = QListWidget()
-        self.m_browser = QTextBrowser()
+    def __init__(self, p_parent=None):
+        super(Form, self).__init__(p_parent)
+        self.m_btn_process_query = QPushButton("Get process id-s")
+        self.m_list_process = QListWidget()
+        self.m_browser_details = QTextBrowser()
 
         l_layout = QVBoxLayout()
-        l_layout.addWidget(self.m_process_query_button)
-        l_layout.addWidget(self.m_process_ids)
-        l_layout.addWidget(self.m_browser)
+        l_layout.addWidget(self.m_btn_process_query)
+        l_layout.addWidget(self.m_list_process)
+        l_layout.addWidget(self.m_browser_details)
 
         self.setLayout(l_layout)
-        self.connect(self.m_process_query_button, SIGNAL("clicked()"), self.update_ui)
+        self.connect(self.m_btn_process_query, SIGNAL("clicked()"), self.update_process_ids)
+        self.connect(self.m_list_process, SIGNAL("itemClicked(QListWidgetItem *)"), self.update_process_details)
         self.setWindowTitle("py-sys")
 
-    def update_ui(self):
+    def update_process_ids(self):
         l_process_ids = get_process_ids()
 
         assert isinstance(l_process_ids, list)
 
         for l_process_id in l_process_ids:
             l_item = QListWidgetItem(QString(str(l_process_id)))
-            self.m_process_ids.addItem(l_item)
+            self.m_list_process.addItem(l_item)
+
+    def update_process_details(self, p_item):
+        l_item = p_item.text()
+        self.m_browser_details.clear()
+        self.m_browser_details.append(get_process_details(l_item))
 
 
 def main():
