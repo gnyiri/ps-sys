@@ -34,10 +34,19 @@ def get_process_status(p_process_id):
     return l_process_status
 
 
-def parse_process_status(p_process_status, p_section):
-    assert isinstance(p_process_status, str)
+def parse_process_status(p_process_id, p_section):
     assert isinstance(p_section, str)
 
-    p_value = p_process_status.split(':')
+    l_process_status = get_process_status(p_process_id)
 
-    print p_value
+    l_ret_val = ''
+
+    for l_line in l_process_status.splitlines():
+        l_value = l_line.split(':')
+
+        if len(l_value) > 1:
+            if l_value[0].strip() == p_section:
+                l_ret_val = l_value[1]
+                break
+
+    return l_ret_val.strip()
