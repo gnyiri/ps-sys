@@ -3,6 +3,7 @@
 import sys
 from ps_utils.py_file_stat import DirStat
 from ps_utils.py_proc_stat import *
+from ps_ui.ps_graph_widget import *
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
@@ -14,12 +15,14 @@ class MainForm(QDialog):
         self.m_list_process = QListWidget()
         self.m_combo_status_section = QComboBox()
         self.m_browser_details = QTextBrowser()
+        self.m_graph_widget = GraphWidget()
 
         l_layout = QGridLayout()
         l_layout.addWidget(self.m_btn_process_query, 0, 0)
         l_layout.addWidget(self.m_list_process, 1, 0)
         l_layout.addWidget(self.m_combo_status_section, 0, 1)
         l_layout.addWidget(self.m_browser_details, 1, 1)
+        l_layout.addWidget(self.m_graph_widget, 2, 2)
 
         self.setLayout(l_layout)
         self.connect(self.m_btn_process_query, SIGNAL('clicked()'), self.update_process_ids)
