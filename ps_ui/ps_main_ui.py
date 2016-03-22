@@ -22,7 +22,7 @@ class MainForm(QDialog):
         l_layout.addWidget(self.m_list_process, 1, 0)
         l_layout.addWidget(self.m_combo_status_section, 0, 1)
         l_layout.addWidget(self.m_browser_details, 1, 1)
-        l_layout.addWidget(self.m_graph_widget, 2, 2)
+        l_layout.addWidget(self.m_graph_widget)
 
         self.setLayout(l_layout)
         self.connect(self.m_btn_process_query, SIGNAL('clicked()'), self.update_process_ids)
